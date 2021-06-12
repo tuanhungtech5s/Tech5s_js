@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/reset.css"/>
+</head>
+<body>
+    <a class="test" href="" style="width:300px;background:#ccc;display:block;height:40px"><span>hello</span></a>
+    <a href="">hello1</a>
+    <a href="">hello3</a>
+    <div id="wrapper" class="hideEffect">
+        <p class="text">hi</p>
+    </div>
+
+    <button id="hide">
+        Hide
+    </button>
+
+    <button id="show">
+        Show
+    </button>
+    <div class="back-to-top smooth"><i class="fa fa-caret-up" aria-hidden="true"></i></div>
+
+    <!-- <script type="text/javascript" src="dist/bundle.js"></script> -->
+    <script type="text/javascript" src="js/system.js"></script>
+    <script src="js/resolve.js"></script>
+    <script type="systemjs-module" src="js/list.js"></script>
+    <!-- <script type="systemjs-module" src="js/backtotop.js"></script> -->
+    <!-- <script type="systemjs-importmap">
+        {
+          "imports": {
+            "Query": "./js/Query.js"
+          }
+        }
+      </script> -->
+      <!-- <script type="systemjs-module" src="import:Query"></script> -->
+    <style>
+        .showEffect {
+        opacity: 1;
+        }
+        .hideEffect {
+        opacity: 0;
+        transition: opacity 400ms;
+        }
+
+
+
+        a{
+            color: black;
+        }
+        .show{
+            display: block !important;
+        }
+        .hidden{
+            display: none !important;
+        }
+        body{
+            height: 10000px;
+        }
+        .back-to-top {
+            display: none;
+            position: fixed;
+            font-size: 26px;
+            cursor: pointer;
+            text-align: center;
+            z-index: 100;
+            width: 35px;
+            height: 35px;
+            line-height: 25px;
+            right: 15px;
+            bottom: 55px;
+            background: white;
+            border-radius: 100%;
+            color: #0E426A;
+            border: solid 1px #0E426A;
+        }
+        .back-to-top:hover {
+            background: #0E426A;
+            color: white; 
+        }
+    </style>
+</body>
+</html>

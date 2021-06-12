@@ -1,0 +1,28 @@
+.show {
+    display: block !important;
+}
+.hidden {
+    display: none !important;
+}
+
+.back-to-top {
+    display: none;
+    position: fixed;
+    font-size: 26px;
+    cursor: pointer;
+    text-align: center;
+    z-index: 100;
+    width: 35px;
+    height: 35px;
+    line-height: 25px;
+    right: 15px;
+    bottom: 55px;
+    background: white;
+    border-radius: 100%;
+    color: #0e426a;
+    border: solid 1px #0e426a;
+}
+.back-to-top:hover {
+    background: #0e426a;
+    color: white;
+}
