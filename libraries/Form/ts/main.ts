@@ -73,6 +73,8 @@ class ValidateInput{
     protected input:SingleElement;
     private tagName:string;
     protected value:string;
+    protected keyRequired = 'required';
+    protected keyRegex = 'text-regex';
     constructor(input:SingleElement){
         this.input = input;
         this.tagName = input._element.tagName.toLowerCase();
@@ -80,27 +82,35 @@ class ValidateInput{
     }
     static create(input:SingleElement):ValidateInput{
         let tagName = input._element.tagName.toLowerCase();
-        if(tagName=='file'){
-            return new ValidateInputFile(input);
-        }
-        else if(tagName =='checkbox'){
-            return new ValidateInputCheckbox(input);
-        }
-        else if(tagName =='select'){
-            return new ValidateInputSelect(input);
+        
+        if(tagName=='input'){
+            let type = input.attr('type')
+            type = type==null?'text':type.toLowerCase();
+            if(type=='file'){
+                return new ValidateInputFile(input);
+            }
+            else if(type =='checkbox'){
+                return new ValidateInputCheckbox(input);
+            }
+            else{
+                return new ValidateInput(input);
+            }
         }
         else{
-            return new ValidateInput(input);
+            if(tagName =='select'){
+                return new ValidateInputSelect(input);
+            }
         }
+        
     }
     static removeAllMessaegError(form:Element):void{
         form.find('.validate_error').remove();
     }
-    addMessageError(item:Element,message:string,type?:string):void{
-        this.removeMessageError(item,type);
+    static addMessageError(item:Element,message:string,type?:string):void{
+        ValidateInput.removeMessageError(item,type);
         item.after(`<div class="validate_error ${type}" style="color:red"><span>${message}</span></div>`);
     }
-    removeMessageError(item:Element,type?:string):void{
+    static removeMessageError(item:Element,type?:string):void{
         let addClass = type!=undefined ? '.'+type:'';
         item.parent().find('.validate_error'+addClass).remove();
     }
@@ -132,15 +142,15 @@ class ValidateInput{
         
         let regex =  this.validateRegex();
         if(!required){
-            let text:any = this.input.tech5s('required');
+            let text:any = this.input.tech5s(this.keyRequired);
             if(text==null) text =  'Vui lòng nhập thông tin '+this.input.attr('name');
-            this.addMessageError(this.input,text,'required');
+            ValidateInput.addMessageError(this.input,text,'required');
         }
         else{
             if(!regex){
-                let text:any = this.input.tech5s('text-regex');
+                let text:any = this.input.tech5s(this.keyRegex);
                 if(text==null) text =  'Vui lòng nhập đúng định dạng '+this.input.attr('name');
-                this.addMessageError(this.input,text,'regex');
+                ValidateInput.addMessageError(this.input,text,'regex');
             }
         }
         return required && regex;
@@ -158,8 +168,46 @@ class ValidateInputSelect extends ValidateInput{
     }
 }
 class ValidateInputFile extends ValidateInput{
-    validateRequired(){
-        return this.input._element.checked;
+    validateNumberFile(){
+        this.keyRegex = 'max-file-error';
+        let max:number = this.input.tech5s('max-file') as unknown as number;
+        console.log(max);
+        return this.input._element.files.length <= max;
+    }
+
+    validateSizeFile(){
+        this.keyRegex = 'max-size-error';
+        let max:number = this.input.tech5s('max-size') as unknown as number;
+        let files = this.input._element.files;
+        if (files.length > 0) {
+            for (let i = 0; i <= files.length - 1; i++) {
+                const fsize = files.item(i).size;
+                const file = Math.round((fsize / 1024));
+                if (file >= max) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    validateTypeFile(){
+        this.keyRegex = 'file-types-error';
+        let type:string = this.input.tech5s('file-types') as string;
+        let types = type.split(',');
+        let files = this.input._element.files;
+        if (files.length > 0) {
+            for (let i = 0; i <= files.length - 1; i++) {
+                let extension = this.value.substring(this.value.lastIndexOf('.') + 1).toLowerCase();
+                if (types.indexOf(extension) <= -1) {  
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+  
+    validateRegex(){
+        return this.validateTypeFile() && this.validateNumberFile() && this.validateSizeFile();
     }
 }
 export class Ajax{
@@ -177,11 +225,13 @@ export class Ajax{
         
     }
     
-    onChange(item:Element){
-        let self = this;
-        // item.onClick(function(){
-        //     self.removeMessageError(item);
-        // })
+    onChange(form:Element){
+        var clearErrorOnClick = form.find('[tech5s-clear-error-on-click]');
+        clearErrorOnClick.forEach(function(input:Element){
+            input.onClick(function(){
+                ValidateInput.removeMessageError(input);
+            })
+        });
     }
     validate(form:SingleElement):boolean{
         var inputRequires = form.find('[tech5s-required]');
@@ -200,22 +250,24 @@ export class Ajax{
     public execute():void{
         let _self = this;
         this._forms.forEach(function(item,index){
-            var clearErrorOnClick = item.find('[tech5s-clear-error-on-click]');
-            clearErrorOnClick.forEach(function(input:any){
-                _self.onChange(input);
-            });
+            _self.onChange(item);
             item.on('submit',function(e:any){
                 e.preventDefault();
                 if(!_self.validate(item)) return;
+                let countFile = item.find('[type=file]').length()>0;
+                let before:any = item.tech5s('ajax-before') ;
                 let success:any = item.tech5s('ajax-success') ;
                 let error:any = item.tech5s('ajax-error');
                 let always:any = item.tech5s('ajax-always');
                 let method:string = item.attr('method') || 'GET';
                 let action:string = item.attr('action') || '';
+                let contentType= countFile?false:item.tech5s('content-type') ;
+                Ajax.callSubFunction(before,'',item,false);
                 Query.ajax({
                     url:action,
                     method:method,
                     body:item.formData(),
+                    contentType:contentType,
                     success: function(res:any){
                         Ajax.callSubFunction(success,res,item,true);
                     },

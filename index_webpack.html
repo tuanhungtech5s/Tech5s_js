@@ -14,13 +14,58 @@
     <div id="wrapper" class="hideEffect">
         <p class="text">hi</p>
     </div>
-    <form id="frm" action="http://brobrand.tech5s.net/test.php" method="POST" tech5s-ajax-form tech5s-ajax-success>
-        <input type="text" name="name" placeholder="Tên cần nhập">
-        <input type="text" name="name1" placeholder="Tên cần nhập 123">
-        <button type="submit">Submit</button>
-    </form>
-    <form tech5s-ajax-form>
-      <div class="form-group">
+    <div style="padding:10px;background:#ccc">
+      <form action="http://brobrand.tech5s.net/test.php" id="frmget" tech5s-ajax-form 
+      tech5s-ajax-success="FORM.success"
+      tech5s-ajax-before="FORM.before"
+      tech5s-ajax-always="FORM.always"
+      tech5s-content-type="application/json; charset=utf-8">
+        <p><input name="name" value="ten" 
+          tech5s-required ="Nhập tên"
+          tech5s-regex="email"
+          tech5s-clear-error-on-click
+          tech5s-text-regex="Nhập đúng định dạng Email" 
+          /></p>
+        <p><input name="name1" value="ten1" 
+          tech5s-required ="Nhập tên 1"
+          /></p>
+        <p><input name="name2" value="ten2"/></p>
+        <p><button type="submit">Submit</button></p>
+      </form>
+    </div>
+    
+    <div style="padding:10px;background:#ddfff7">
+      <form id="frm" action="http://brobrand.tech5s.net/test.php" method="POST" tech5s-ajax-form tech5s-ajax-success enctype="multipart/form-data">
+        <p><input 
+          tech5s-required ="Nhập tên"
+          tech5s-regex="email"
+          tech5s-clear-error-on-click
+          tech5s-text-regex="Nhập đúng định dạng Email"
+          type="text" name="name" placeholder="Tên cần nhập"></p>
+          <p><input type="text" name="name1" placeholder="Tên cần nhập 123"></p>
+          <p><input type="file" name="file"
+            tech5s-required ="Thiếu File" 
+            tech5s-keep-error-on-click 
+            tech5s-max-file=1
+            tech5s-max-file-error="Nhập tối đa 1 file"
+            tech5s-max-size=5
+            tech5s-max-size-error="File tối đa 5KB"
+            tech5s-file-types="pdf,jpg,png,txt"
+            tech5s-file-types-error="Chỉ được phép nhập file PDF, JPG, PNG, TXT"
+            type="file" value="1" tech5s-required
+            ></p>
+          <p><button type="submit">Submit</button></p>
+      </form>
+    </div>
+    <div style="padding:10px;background:#ccc">
+      <form id="frm1" action="http://brobrand.tech5s.net/test.php" method="POST" tech5s-ajax-form tech5s-ajax-success>
+        <p><input type="text" name="name" placeholder="Tên cần nhập"></p>
+          <p><input type="text" name="name1" placeholder="Tên cần nhập 123"></p>
+          <p><button type="submit">Submit</button></p>
+      </form>
+    </div>
+    <form tech5s-ajax-form method="post" enctype="multipart/form-data">
+      <!-- <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input name="field1" 
         tech5s-clear-error-on-click
@@ -35,8 +80,9 @@
         <input name="field2" 
         tech5s-regex="\d+"
         tech5s-clear-error-on-click
-         tech5s-text-regex="Chỉ được nhập số mà thôi"
-        tech5s-required tech5s-text-required="Thiếu mat khau" type="text" class="form-control">
+        tech5s-text-regex="Chỉ được nhập số mà thôi"
+        tech5s-required="Thiếu mat khau"
+        type="text" class="form-control">
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
@@ -49,17 +95,24 @@
       <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
         <input tech5s-required ="Chọn option" type="checkbox" value="1" name="has_policy" />
-      </div>
+      </div> -->
       <div class="form-group">
         <label for="exampleInputPassword1">File</label>
         <input 
         tech5s-required ="Thiếu File" 
-        tech5s-keep-error-on-click type="file" value="1" tech5s-required name="file" />
+        tech5s-keep-error-on-click 
+        tech5s-max-file=1
+        tech5s-max-file-error="Nhập tối đa 1 file"
+        tech5s-max-size=5
+        tech5s-max-size-error="File tối đa 5KB"
+        tech5s-file-types="pdf,jpg,png,txt"
+        tech5s-file-types-error="Chỉ được phép nhập file PDF, JPG, PNG, TXT"
+        type="file" value="1" tech5s-required name="file" />
       </div>
-      <div class="form-group form-check">
+      <!-- <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
-      </div>
+      </div> -->
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
     <button id="hide">
@@ -85,7 +138,7 @@
     
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script type="text/javascript" src="dist/384.js"></script>
+    <script type="text/javascript" src="dist/320.js"></script>
     <script type="text/javascript" src="dist/Tech.js"></script>
     
     

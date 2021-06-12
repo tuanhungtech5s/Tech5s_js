@@ -3,7 +3,14 @@ ajxForm.execute();
 var FORM = {
     success: function (e) {
         console.log("success");
-        console.log(e);
-        return "xxxx";
+    },
+    before: function () {
+        console.log("before");
+    },
+    always: function () {
+        console.log("always");
+    },
+    error: function () {
+        console.log("error");
     },
 };

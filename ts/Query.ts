@@ -8,7 +8,7 @@ interface DOMEvent<T extends EventTarget> extends Event {
 }
 
 export class Query{
-    static ajaxGlobalHeader:object= {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8','x-requested-with':'XMLHttpRequest'};
+    static ajaxGlobalHeader:object= {'x-requested-with':'XMLHttpRequest'};
     static ajaxGlobalParams:object= {};
     static ajaxGlobalStartFunction:FunctionCallBackNoParam;
     static ajaxGlobalCompleteFunction:FunctionCallBackNoParam;
@@ -45,8 +45,8 @@ export class Query{
     static type(obj:any){
         return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, '$1').toLowerCase();
     }
-    static extend(out:any,...maps:Array<any>):any {
-        out = out || {};
+    static extend(defaults:any,...maps:Array<any>):any {
+        let out = {...defaults} || {};
         for (var i = 0; i < maps.length; i++) {
           var obj = maps[i];
           if (!obj)
@@ -136,10 +136,25 @@ export class Query{
         url += (url.split('?')[1] ? '&':'?') + new URLSearchParams(params as any).toString();
         return url;
     }
+    private static getContentType(obj:any){
+        let contentType:any = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'};
+        
+        if(obj.contentType!=null){
+            if(obj.contentType){
+                contentType = {'Content-Type':obj.contentType};
+            }
+            else{
+                contentType = {};
+            }
+        }
+        return contentType;
+    }
     static _ajax(obj:any){
-        let params = obj.body ||{};
-        params = Query.extend(Query.ajaxGlobalParams,params);
-        params = new URLSearchParams(params).toString();
+        let params = obj.body as FormData || new FormData();
+        var defaultParams:any = Query.ajaxGlobalParams as any;
+        for ( var key in defaultParams ) {
+            params.append(key, defaultParams[key]);
+        }
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             let method = obj.method || "GET";
@@ -148,7 +163,8 @@ export class Query{
             }
             xhr.open(method, obj.url);
             let paramHeader = obj.headers || {};
-            let headers = Query.extend(Query.ajaxGlobalHeader,paramHeader);
+            
+            let headers = Query.extend(Query.ajaxGlobalHeader,paramHeader,Query.getContentType(obj));
             Object.keys(headers).forEach(key => {
                 xhr.setRequestHeader(key, headers[key]);
             });

@@ -296,6 +296,7 @@ export class SingleElement extends BaseElement{
         return new URLSearchParams(formData as any).toString();
     }
     formData():FormData{
+        return new FormData(this._element);
         var formData = new FormData(this._element);
         var object:any={};
         formData.forEach(function(value, key){
