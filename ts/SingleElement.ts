@@ -3,7 +3,7 @@ import {ListElement} from './ListElement';
 import {List,FunctionCallBack,Element, FunctionCallBackTwoParam} from './Element';
 import { Query } from './Query';
 
-const camalize = function camalize(str:string) {
+export const camalize = function camalize(str:string) {
     return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, function(match, chr)
     {
         return chr.toUpperCase();
@@ -64,7 +64,20 @@ export class SingleElement extends BaseElement{
         }
         return this._element.getAttribute(key);
     }
-    tech5s(key:string,value?:string|number):string|Array<string> {
+    tech5s(key?:string,value?:string|number):string|Array<string>|any {
+        if(key==undefined && value == undefined){
+            let results:any = {};
+            for (var i = 0, atts = this._element.attributes; i < atts.length; i++){
+                let nodeName = atts[i].nodeName;
+                if(nodeName.indexOf('tech5s-')===0){
+                    nodeName = camalize(nodeName.substring(7));
+                    let nodevalue = atts[i].nodeValue;
+                    results[nodeName] = nodevalue;
+                }
+
+            }
+            return results;
+        }
         let tech5sKey = 'tech5s-'+key;
         return this.attr(tech5sKey,value);
     }
@@ -296,7 +309,7 @@ export class SingleElement extends BaseElement{
                 return new ListElement(tmps);
             }
         }
-        return new SingleElement(undefined);
+        return new ListElement(children);
     }
     onClick(callback: FunctionCallBack): void {
         this._element.addEventListener('click',callback);

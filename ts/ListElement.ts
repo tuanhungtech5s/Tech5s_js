@@ -87,20 +87,10 @@ export class ListElement extends BaseElement{
         })
         return results.join(',');
     }
-    tech5s(key:string,value?:string|number):string|Array<string> {
-        if(value!=undefined){
-            this._element.forEach((item:SingleElement)=>{
-                item.attr(key,value);
-            })
-            return value as string;
-        }
-        let results:Array<string> = [];
+    tech5s(key?:string,value?:string|number):string|Array<string>|any {
+        let results:Array<any> = [];
         this._element.forEach((item:SingleElement)=>{
-            var value = item.attr(key);
-            if(value!=null){
-                results.push(value);
-            }
-            
+            results.push(item.tech5s(key,value));
         })
         return results;
     }

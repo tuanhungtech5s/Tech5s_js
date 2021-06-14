@@ -8,6 +8,7 @@ module.exports = {
         Form: "./libraries/Form/ts/main.ts",
         Common: "./libraries/Common/ts/main.ts",
         Tech5sMenu: "./libraries/Menu/ts/main.ts",
+        Keen: "./libraries/Keen/ts/Keen.ts",
     },
     module: {
         rules: [

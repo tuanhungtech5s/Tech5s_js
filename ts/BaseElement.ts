@@ -57,7 +57,7 @@ export abstract class BaseElement implements Element{
     abstract empty():void;
 
     abstract attr(key:string,value?:string|number):string;
-    abstract tech5s(key:string,value?:string|number):string|Array<string>;
+    abstract tech5s(key?:string,value?:string|number):string|Array<string>|any;
 
     abstract removeAttribute(key:string):Element;
     abstract height(height?:any,unit?:string):number;

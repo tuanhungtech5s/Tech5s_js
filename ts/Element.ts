@@ -60,7 +60,7 @@ export interface Element{
 
 
     attr(key:string,value?:string|number):string;
-    tech5s(key:string,value?:string|number):string|Array<string>;
+    tech5s(key?:string,value?:string|number):string|Array<string>|any;
     removeAttribute(key:string):Element;
     height(height?:any,unit?:string):number;
     outerHeight():number;
