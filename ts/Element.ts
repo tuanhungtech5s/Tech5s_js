@@ -12,8 +12,8 @@ export interface Element{
     html(html?:string): string;
     val(html?:string): string;
     outerHtml(): string;
-    css(key:string,value:string):Element;
-
+    css(key:any,value:string):Element;
+    removeCss(key:string):Element;
 
     find(childSelector:string):Element;
     

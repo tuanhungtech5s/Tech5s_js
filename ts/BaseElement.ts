@@ -17,7 +17,8 @@ export abstract class BaseElement implements Element{
     abstract val(html?:string): string;
     abstract html(html?:string): string;
     abstract outerHtml(): string;
-    abstract css(key:string,value:string):Element;
+    abstract css(key:any,value:string):Element;
+    abstract removeCss(key:string):Element;;
 
 
     abstract find(childSelector:string):Element;

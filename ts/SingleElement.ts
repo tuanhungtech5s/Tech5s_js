@@ -258,9 +258,30 @@ export class SingleElement extends BaseElement{
         }
         return this._element.value;
     }
-    css(key:string,value:string):Element{
-        let styleKey = camalize(key);
-        this._element.style[styleKey] = value;
+    css(key:any,value:string):Element{
+        if(typeof key ==='string'){
+            let styleKey = camalize(key);
+            if(value==undefined){
+                return this._element.style[styleKey];
+            }
+            else{
+                if(value==""){
+                    this.removeCss(key);
+                }
+                else{
+                    this._element.style[styleKey] = value;
+                }
+            }
+        }
+        else if(typeof key ==='object' && value == undefined){
+            for ( var att in key ) {
+                this._element.style[att] = key[att];
+            }
+        }
+        return this;
+    }
+    removeCss(key:string):Element{
+        this._element.style.removeProperty(key);
         return this;
     }
     find(childSelector:string): Element {

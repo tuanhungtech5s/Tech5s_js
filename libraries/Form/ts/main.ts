@@ -26,7 +26,17 @@ class SubFunction{
     }
     private callDefaultFunction(response:any){
         if(!this.hasDefault) return ;
-        response = JSON.parse(response);
+        if(typeof response == 'string'){
+            try {
+                response = JSON.parse(response);
+            } catch (error) {
+                response = false;
+                console.error(error);
+            }
+        }
+        if(!response) {
+            return;
+        }
         if(response.code!=undefined && response.code ==200){
             Toast.success(response.message);
             if(this.form.isNotNull()){
@@ -171,7 +181,6 @@ class ValidateInputFile extends ValidateInput{
     validateNumberFile(){
         this.keyRegex = 'max-file-error';
         let max:number = this.input.tech5s('max-file') as unknown as number;
-        console.log(max);
         return this.input._element.files.length <= max;
     }
 
@@ -247,6 +256,27 @@ export class Ajax{
         }
         return result;
 	};
+    private getImageLoading():string{
+        return `<img style="height: 24px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0ibWFyZ2luOiBhdXRvOyBiYWNrZ3JvdW5kOiBub25lOyBkaXNwbGF5OiBibG9jazsgc2hhcGUtcmVuZGVyaW5nOiBhdXRvOyIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYzVjNWM1IiBzdHJva2Utd2lkdGg9IjciIHI9IjQ0IiBzdHJva2UtZGFzaGFycmF5PSIyMDcuMzQ1MTE1MTM2OTI2MzIgNzEuMTE1MDM4Mzc4OTc1NDQiPgogIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgZHVyPSIwLjU1ODY1OTIxNzg3NzA5NDlzIiB2YWx1ZXM9IjAgNTAgNTA7MzYwIDUwIDUwIiBrZXlUaW1lcz0iMDsxIj48L2FuaW1hdGVUcmFuc2Zvcm0+CjwvY2lyY2xlPgo8IS0tIFtsZGlvXSBnZW5lcmF0ZWQgYnkgaHR0cHM6Ly9sb2FkaW5nLmlvLyAtLT48L3N2Zz4=" />`;
+    }
+    private disableButtonSubmit(form:Element,isLoading:boolean=false):void{
+        let _self = this;
+        let buttons:Element = form.find('button[type=submit]');
+        buttons.forEach(function(item:Element,index:number){
+            if(isLoading){
+                item.attr('data-old-text',item.html());
+                item.html(_self.getImageLoading());
+                item.attr('disabled','true');
+                item.css('cursor','wait');
+            }
+            else{
+                item.html(item.attr('data-old-text'));
+                item.removeAttribute('disabled');
+                item.css('cursor','');
+            }
+            
+        })
+    }
     public execute():void{
         let _self = this;
         this._forms.forEach(function(item,index){
@@ -263,6 +293,7 @@ export class Ajax{
                 let action:string = item.attr('action') || '';
                 let contentType= countFile?false:item.tech5s('content-type') ;
                 Ajax.callSubFunction(before,'',item,false);
+                _self.disableButtonSubmit(item,true);
                 Query.ajax({
                     url:action,
                     method:method,
@@ -276,6 +307,8 @@ export class Ajax{
                     },
                     always:function(res:any){
                         Ajax.callSubFunction(always,res,item);
+                        _self.disableButtonSubmit(item,false);
+                        
                     }
                 });
             })

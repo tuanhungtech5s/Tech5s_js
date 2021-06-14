@@ -268,9 +268,15 @@ export class ListElement extends BaseElement{
         })
         return html;
     }
-    css(key:string,value:string):Element{
+    css(key:any,value:string):Element{
         this._element.forEach((item:SingleElement)=>{
             item.css(key,value);
+        })
+        return this;
+    }
+    removeCss(key:string):Element{
+        this._element.forEach((item:SingleElement)=>{
+            item.removeCss(key);
         })
         return this;
     }
