@@ -7,6 +7,7 @@ module.exports = {
         BackToTop: "./ts/BackToTop.ts",
         Form: "./libraries/Form/ts/main.ts",
         Common: "./libraries/Common/ts/main.ts",
+        Tech5sMenu: "./libraries/Menu/ts/main.ts",
     },
     module: {
         rules: [

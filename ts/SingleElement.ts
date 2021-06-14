@@ -9,7 +9,7 @@ const camalize = function camalize(str:string) {
         return chr.toUpperCase();
     });
 }
-export const IS_SINGLE_ELEMENT = -1;
+export const NOT_FOUND = -1;
 export class SingleElement extends BaseElement{
     _element: any;
     constructor(element:any){
@@ -286,7 +286,17 @@ export class SingleElement extends BaseElement{
     }
     find(childSelector:string): Element {
         let children = this._element.querySelectorAll(childSelector);
-        return new ListElement(children);
+        let tmps = Array.prototype.slice.call(children);
+        if(tmps.length==1){
+            return new SingleElement(tmps[0]);
+        }
+        else{
+            if(tmps.length>0)
+            {
+                return new ListElement(tmps);
+            }
+        }
+        return new SingleElement(undefined);
     }
     onClick(callback: FunctionCallBack): void {
         this._element.addEventListener('click',callback);
@@ -326,10 +336,10 @@ export class SingleElement extends BaseElement{
         return object;
     }
     isNotNull():boolean{
-        return (this._element!=null);
+        return (this._element!=null && this._element!=undefined);
     }
     length():number{
-        return IS_SINGLE_ELEMENT;
+        return this.isNotNull()?1:NOT_FOUND;
     }
     forEach(callback:FunctionCallBackTwoParam){
         callback(this,0);

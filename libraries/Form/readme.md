@@ -26,3 +26,6 @@ tech5s-max-size=5 Max size có thể upload tính theo KB
 tech5s-max-size-error="File tối đa 5KB" Thông báo khi up kích thước sai
 tech5s-file-types="pdf,jpg,png,txt" Các định dạng cho phép nhập, chú ý hiện tại chỉ check đuôi file không check mime, do vậy cần phải validate code = PHP
 tech5s-file-types-error="Chỉ được phép nhập file PDF, JPG, PNG, TXT" Thông báo khi sai định dạng
+
+Form cập nhật
+Sẽ disable các nút có type = submit trong quá trình submit, và sẽ enable lại khi xong

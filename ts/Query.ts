@@ -17,7 +17,6 @@ export class Query{
         if (typeof selector === "string") {
             nodelists = document.querySelectorAll(selector);
             let tmps = Array.prototype.slice.call(nodelists);
-            (nodelists);
             if(tmps.length==1){
                 return new SingleElement(tmps[0]);
             }

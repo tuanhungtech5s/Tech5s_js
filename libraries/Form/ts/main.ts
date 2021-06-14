@@ -273,6 +273,7 @@ export class Ajax{
                 item.html(item.attr('data-old-text'));
                 item.removeAttribute('disabled');
                 item.css('cursor','');
+                item.removeAttribute('data-old-text');
             }
             
         })
