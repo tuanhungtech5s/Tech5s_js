@@ -46,12 +46,12 @@ class SubFunction{
 }
 export class Keen {
     private methods = ['afterChange','beforeChange','mounted','created','slideChanged','dragEnd','dragStart','move','destroyed'];
+    private booleanAttributes = ['centered','controls','loop','resetSlide','rtl','rubberband','vertical'];
     constructor(options: object = {}) {
 
     }
     public create(){
         let keens = Query.create('[tech5s-keen]');
-        if(keens == undefined) return;
         for (let index = 0; index < keens.length(); index++) {
             const element = keens.item(index);
             let id = element.attr('id');
@@ -67,6 +67,12 @@ export class Keen {
                         SubFunction.callSubFunction(fncName,instance);
                     }
                 }
+                else if(this.booleanAttributes.indexOf(key)!=-1){
+                    options[key] = Boolean(JSON.parse(value as string));
+                }
+                else if(key=="breakpoints"){
+                    // options[key] = JSON.parse(value as string);
+                }
             }
             this.initSlider(id,options);
         }
@@ -74,7 +80,17 @@ export class Keen {
 
     }
     public initSlider(htmlElementId:any,options:any):void{
+        console.log(options);
+        options= {
+            loop: true,
+            breakpoints: {
+              '(min-width: 720px) and (max-width: 1000px)': {
+                loop: false,
+              },
+            },
+          };
+          console.log(options);
         let keenId:any = `keen_${htmlElementId}`;
-        window[keenId] = new KeenSlider(htmlElementId,options);
+        window[keenId] = new KeenSlider(`#${htmlElementId}`,options);
     }
 }
