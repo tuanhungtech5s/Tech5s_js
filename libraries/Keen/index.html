@@ -1,48 +1,79 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="./css/keen-slider.min.css" />
-  </head>
-  <body>
-    <div id="my-keen-slider" class="keen-slider" tech5s-keen 
-    tech5s-created="K.created"
-    tech5s-loop="true"
-    tech5s-controls="true"
-    tech5s-rtl="false"
-    tech5s-rubberband="true"
-    tech5s-breakpoints="{
-      '(min-width: 720px) and (max-width: 1000px)': {
-        loop: false,
-      }"
-    >
-      <div class="keen-slider__slide">1</div>
-      <div class="keen-slider__slide">2</div>
-      <div class="keen-slider__slide">3</div>
-    </div>
-    <script src="./js/keen-slider.js"></script>
-    <script>
-     
-    </script>
-    <style type="text/css">
-      .keen-slider__slide{
-        background: #ccc;
-        /* width: 300px; */
-        height: 200px;
-      }
-      .keen-slider__slide{
-        font-size: 130px;
-      }
-    </style>
-    <script type="text/javascript" src="../../../Tech5s/dist/320.js"></script>
-    <script type="text/javascript" src="../../../Tech5s/dist/Tech.js"></script>
-    <script type="text/javascript" src="../../../Tech5s/dist/Keen.js"></script>
-    <script>
-      var K = {
-        created: () => {
-          console.log('created')
-        },
-      }
-      var k = new Keen.Keen;
-      k.create();
-    </script>
-  </body>
+    <head>
+        <link rel="stylesheet" href="./css/keen-slider.min.css" />
+    </head>
+    <body>
+        <div>
+            <div
+                id="my-keen-slider"
+                class="keen-slider"
+                tech5s-keen
+                tech5s-created="K.created"
+                tech5s-loop="true"
+                tech5s-controls="true"
+                tech5s-rtl="false"
+                tech5s-rubberband="true"
+                tech5s-breakpoints='{
+        "(min-width: 720px) and (max-width: 1000px)": {
+          "loop": false
+        }
+      }'
+                tech5s-drag-speed="1"
+                tech5s-duration="500"
+                tech5s-initial="0"
+                tech5s-mode="free-snap"
+                tech5s-prevent-event="data-keen-slider-pe"
+                tech5s-slides=".keen-slider__slide"
+                tech5s-slides-per-view="1"
+                tech5s-spacing="0"
+                tech5s-extensions='{"KeenNavigation":{}}'
+            >
+                <div class="keen-slider__slide">1</div>
+                <div class="keen-slider__slide">2</div>
+                <div class="keen-slider__slide">3</div>
+            </div>
+            <div class="dots"></div>
+            <div class="arrow-left">Left</div>
+            <div class="arrow-right">Right</div>
+        </div>
+
+        <script src="./js/keen-slider.js"></script>
+        <script></script>
+        <style type="text/css">
+            .keen-slider__slide {
+                background: #ccc;
+                /* width: 300px; */
+                height: 200px;
+            }
+            .keen-slider__slide {
+                font-size: 130px;
+            }
+        </style>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/320.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/Tech.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/Keen.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/KeenNavigation.js"
+        ></script>
+
+        <script>
+            var K = {
+                created: (s) => {
+                    console.log("created_index_html");
+                },
+            };
+            var k = new Keen.Keen();
+            k.create();
+        </script>
+    </body>
 </html>

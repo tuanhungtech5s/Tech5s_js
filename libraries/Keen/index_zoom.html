@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Keen-Slider</title>
+        <meta charset="UTF-8" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/keen-slider@5.5.0/keen-slider.min.css"
+        />
+        <style>
+            body {
+                margin: 0;
+                font-family: "Inter", sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            .zoom-out {
+                perspective: 1000px;
+                height: 50vw;
+            }
+
+            @media (min-width: 768px) {
+                .zoom-out {
+                    height: 300px;
+                }
+            }
+
+            .zoom-out__slide {
+                position: absolute;
+            }
+
+            .zoom-out__slide img {
+                background-color: transparent;
+                width: 100%;
+                height: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateY(-50%) translateX(-50%);
+                -webkit-transform: translateY(-50%) translateX(-50%);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>
+            <div
+                id="my-keen-slider"
+                class="keen-slider zoom-out"
+                tech5s-keen
+                tech5s-loop="true"
+                tech5s-initial="2"
+                tech5s-extensions='{"KeenZoom":{}}'
+            >
+                <div class="keen-slider__slide zoom-out__slide">
+                    <img
+                        src="https://images.unsplash.com/photo-1590004953392-5aba2e72269a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                    />
+                </div>
+                <div class="keen-slider__slide zoom-out__slide">
+                    <img
+                        src="https://images.unsplash.com/photo-1590004845575-cc18b13d1d0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                    />
+                </div>
+                <div class="keen-slider__slide zoom-out__slide">
+                    <img
+                        src="https://images.unsplash.com/photo-1590004987778-bece5c9adab6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                    />
+                </div>
+                <div class="keen-slider__slide zoom-out__slide">
+                    <img
+                        src="https://images.unsplash.com/photo-1590005176489-db2e714711fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80"
+                    />
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/keen-slider@5.0.2/keen-slider.min.js"></script>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/320.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/Tech.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/Keen.js"
+        ></script>
+        <script
+            type="text/javascript"
+            src="../../../Tech5s/dist/KeenZoom.js"
+        ></script>
+        <script>
+            var k = new Keen.Keen();
+            k.create();
+        </script>
+    </body>
+</html>

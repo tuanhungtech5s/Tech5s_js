@@ -9,6 +9,11 @@ module.exports = {
         Common: "./libraries/Common/ts/main.ts",
         Tech5sMenu: "./libraries/Menu/ts/main.ts",
         Keen: "./libraries/Keen/ts/Keen.ts",
+        KeenNavigation: "./libraries/Keen/ts/KeenNavigation.ts",
+        KeenFader: "./libraries/Keen/ts/KeenFader.ts",
+        KeenLazy: "./libraries/Keen/ts/KeenLazy.ts",
+        KeenZoom: "./libraries/Keen/ts/KeenZoom.ts",
+        KeenAutoplay: "./libraries/Keen/ts/KeenAutoplay.ts",
     },
     module: {
         rules: [

@@ -26,6 +26,7 @@ export class Query{
                     return new ListElement(tmps);
                 }
             }
+            return new ListElement(nodelists);
         }
         else{
             return new SingleElement(selector); ;
