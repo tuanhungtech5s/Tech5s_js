@@ -150,14 +150,18 @@ export class Query{
         return contentType;
     }
     static _ajax(obj:any){
-        let params = obj.body as FormData || new FormData();
+        let params:any = obj.body as FormData || new FormData();
         var defaultParams:any = Query.ajaxGlobalParams as any;
         for ( var key in defaultParams ) {
             params.append(key, defaultParams[key]);
         }
+        if((obj.contentType!=null && obj.contentType!=false) || (obj.contentType==null)){
+            params = new URLSearchParams(params as any).toString();
+        }
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             let method = obj.method || "GET";
+            method = method.toUpperCase();
             if(method=='GET'){
                 obj.url = Query.addParameterToURL(obj.url,params);
             }
