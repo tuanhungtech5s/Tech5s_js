@@ -43,6 +43,9 @@ export class FixedMenu{
             if(isTop){
                 this.header.addClass(this.options.classMenuIsTop);
             }
+            else{
+                this.header.removeClass(this.options.classMenuIsTop);
+            }
         }
     }
 	public hideHeader():void{
