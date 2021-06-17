@@ -8,7 +8,8 @@ export class FixedMenu{
         classMenuInShow : 'in-menu-show',
 		classMenuInHide : 'in-menu-hide',
 		classMenuIsTop : 'is-top',
-        classHeader:'.header'
+        classHeader:'.header',
+        onScroll:null
     };
     private header:Element;
     private body:Element;
@@ -31,7 +32,6 @@ export class FixedMenu{
     }
     public showHeader(isTop:boolean= false):void{
         if (!this.body.hasClass(this.options.classMenuInShow) && !this.header.hasClass(this.options.classMenuInShow)) {
-
             this.body.css('padding-top',this.headerHeight+`px`);
             this.header.css('top','0px');
             this.header
@@ -62,9 +62,13 @@ export class FixedMenu{
         if(!this.options.hideOnScrollDown) return;
 		
         let self = this;
+        let fncScroll = this.options.onScroll;
         Query.create(window).on("scroll", function(){
             var currentScrollTop = Query.getScrollTop();
             if (currentScrollTop > self.lastScrollTop){
+                if(fncScroll!=null){
+                    fncScroll({lastScrollTop:self.lastScrollTop,headerHeight:self.headerHeight,type:'hide'})
+                }
                 if (self.lastScrollTop > self.headerHeight) {
                     self.hideHeader();
                 }
@@ -73,10 +77,16 @@ export class FixedMenu{
                 if((delayShowOnScrollTop >0 && (0-delayShowOnScrollTop)>ScrollSpeedTester.estimate() ) || delayShowOnScrollTop<=0)
                 {
                     self.showHeader();
+                    if(fncScroll!=null){
+                        fncScroll({lastScrollTop:self.lastScrollTop,headerHeight:self.headerHeight,type:'show'})
+                    }
                 }
             }
             if (self.lastScrollTop <= self.headerHeight) {
                 self.showHeader(true);
+                if(fncScroll!=null){
+                    fncScroll({lastScrollTop:self.lastScrollTop,headerHeight:self.headerHeight,type:'show_top'})
+                }
             }
             self.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
         });
