@@ -7,6 +7,7 @@ export class FixedMenu{
         delayShowOnScrollTop: 35, /* Delay hiển thị khi scroll top. Áp dụng khi hideOnScrollDown = true */
         classMenuInShow : 'in-menu-show',
 		classMenuInHide : 'in-menu-hide',
+		classMenuIsTop : 'is-top',
         classHeader:'.header'
     };
     private header:Element;
@@ -28,7 +29,7 @@ export class FixedMenu{
 		this.header.addClass('fixed');
         this.initScroll();
     }
-    public showHeader():void{
+    public showHeader(isTop:boolean= false):void{
         if (!this.body.hasClass(this.options.classMenuInShow) && !this.header.hasClass(this.options.classMenuInShow)) {
 
             this.body.css('padding-top',this.headerHeight+`px`);
@@ -39,6 +40,9 @@ export class FixedMenu{
             this.body
             .addClass(this.options.classMenuInShow)
             .removeClass(this.options.classMenuInHide);
+            if(isTop){
+                this.header.addClass(this.options.classMenuIsTop);
+            }
         }
     }
 	public hideHeader():void{
@@ -50,6 +54,7 @@ export class FixedMenu{
             this.header.removeClass(this.options.classMenuInShow);
             this.body.addClass(this.options.classMenuInHide);
             this.body.removeClass(this.options.classMenuInShow);
+            
         }
     };
     
@@ -71,7 +76,7 @@ export class FixedMenu{
                 }
             }
             if (self.lastScrollTop <= self.headerHeight) {
-                self.showHeader();
+                self.showHeader(true);
             }
             self.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
         });
