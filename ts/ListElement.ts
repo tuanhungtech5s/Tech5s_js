@@ -177,6 +177,13 @@ export class ListElement extends BaseElement{
             item.show();
         })
     }
+    isVisible():boolean{
+        let result = true;
+        this._element.forEach((item:SingleElement)=>{
+            result = result && item.isVisible();
+        })
+        return result;
+    }
     index(): number {
         return this._element[0].index();
     }

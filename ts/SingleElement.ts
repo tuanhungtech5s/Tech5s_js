@@ -155,6 +155,9 @@ export class SingleElement extends BaseElement{
     show(): void {
         this._element.style.display = '';
     }
+    isVisible():boolean{
+        return this._element.offsetWidth > 0 && this._element.offsetHeight > 0;
+    }
     index():number{
         var el = this._element;
         var i = 0;
