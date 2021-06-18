@@ -8,7 +8,7 @@ export class FixedMenu{
         classMenuInShow : 'in-menu-show',
 		classMenuInHide : 'in-menu-hide',
 		classMenuIsTop : 'is-top',
-        classHeader:'.header',
+        classMenuWrapper:'.header',
         onScroll:null
     };
     private header:Element;
@@ -17,7 +17,7 @@ export class FixedMenu{
     private lastScrollTop:number = 0;
     constructor(options:object = {}){
         this.options = Query.extend(this.options,options);
-        this.header = Query.create(this.options.classHeader);
+        this.header = Query.create(this.options.classMenuWrapper);
         this.body = Query.create('body');
         this.headerHeight = this.header.outerHeight();
         this.init();

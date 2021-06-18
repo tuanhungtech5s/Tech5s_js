@@ -2,6 +2,7 @@ import { Query } from "../../../ts/Query";
 import { FixedMenu } from "./FixedMenu";
 import { MenuMobile } from "./MenuMobile";
 import { SearchMenu } from "./SearchMenu";
+import { FixedMiddleMenu } from "./FixedMiddleMenu";
 
 export class Tech5sMenu{
     private isDebug:boolean;
@@ -10,6 +11,9 @@ export class Tech5sMenu{
         if(isDebug){
            console.warn('Tech5s Menu Developed By Toanhtv & convert to libray by Hungvt - Tech5s');
         }
+    }
+    createFixedMiddleMenu(options:object={}):FixedMiddleMenu{
+        return FixedMiddleMenu.create(options);
     }
     createFixedMenu(options:object={}):FixedMenu{
         return FixedMenu.create(options);
@@ -20,6 +24,7 @@ export class Tech5sMenu{
     createSearchMenu(options:object={}):SearchMenu{
         return SearchMenu.create(options);
     }
+    
 
     static quickCreate(isDebug:boolean =true,options:any={}):void{
         let optionsDefault:any={fixedMenu:{},searchMenu:{},menuMobile:{}};
