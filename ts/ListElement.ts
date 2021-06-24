@@ -29,12 +29,20 @@ export class ListElement extends BaseElement{
         return max;
     }
     offset(): object {
-        console.log('Method offset is not exist in List!');
-        return {top:0,left:0};
+        let results:any = [];
+        this._element.forEach((item:SingleElement)=>{
+            var value = item.offset();
+            results.push(value);
+        })
+        return results;
     }
     position(): object {
-        console.log('Method position is not exist in List!');
-        return {top:0,left:0};
+        let results:any = [];
+        this._element.forEach((item:SingleElement)=>{
+            var value = item.position();
+            results.push(value);
+        })
+        return results;
     }
     width(width?:any,unit?:string): number {
         if(width!=undefined){

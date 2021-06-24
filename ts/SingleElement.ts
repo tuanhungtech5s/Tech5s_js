@@ -36,7 +36,7 @@ export class SingleElement extends BaseElement{
         return {left: this._element.offsetLeft, top: this._element.offsetTop};
     }
     position(): object {
-        throw new Error('Method not implemented.');
+       return  this._element.getBoundingClientRect();
     }
     width(width?:any,unit?:string): number {
         if(width!=undefined){
